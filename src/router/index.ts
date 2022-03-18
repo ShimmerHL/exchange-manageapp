@@ -13,7 +13,12 @@ const routes: Array<RouteConfig> = [
       {
         path: '/GiftManagement',
         name: 'GiftManagement',
-        component: () => import('../views/administrator/components/GiftManagement.vue')
+        component: () => import('../views/administrator/GiftManagement/GiftManagement.vue')
+      },
+      {
+        path: '/UserManagement',
+        name: 'UserManagement',
+        component: () => import('../views/administrator/UserManagement/UserManagement.vue')
       },
     ]
   },

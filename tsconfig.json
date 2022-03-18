@@ -13,6 +13,7 @@
     "useDefineForClassFields": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "noImplicitAny": false,
     "types": [
       "webpack-env"
     ],
@@ -34,8 +35,8 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/store/GiftManagement/index.d.ts", "src/shims-tsx.d.js", "src/store/GiftManagement/index.d.ts", "src/store/modules/GiftManagement.js"  ],
   "exclude": [
     "node_modules"
-  ]
+  ],
 }
