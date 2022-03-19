@@ -5,7 +5,7 @@
     style="width: 100%"
     v-model="state"
     :fetch-suggestions="querySearch"
-    placeholder="请输入礼品全名"
+    placeholder="请输入用户名"
     :trigger-on-focus="false"
     @select="handleSelect"
     :clearable="true"
@@ -28,13 +28,13 @@ export default {
     async querySearch(queryString, cb) {
       let restaurants = await new Promise((res, rej) => {
         axios
-          .post(Utils.ServeUrl + "/GiftManagement/GiftManagementSearch", {
+          .post(Utils.ServeUrl + "/EnterpriseManagement/EnterpriseManagementSearch", {
             Text: queryString,
           })
           .then((AxiosRes) => {
             res(AxiosRes.data);
           })
-          .catch((err) => [rej(err)]);
+          .catch((err) => {rej(err)});
       });
       cb(restaurants);
     },
@@ -49,22 +49,23 @@ export default {
     handleSelect(item) {
       axios
         .post(
-          Utils.ServeUrl + "/GiftManagement/GiftSearchReturnManagementData",
+          Utils.ServeUrl + "/EnterpriseManagement/EnterpriseSearchReturnManagementData",
           {
-            GiftUnique: item.GiftUnique,
+            Registration: item.Registration,
           }
         )
-        .then((tableDatares) => {
-              Utils.tableDataAlterFun(this,tableDatares)
+        .then((EnterprisetableDatares) => {
+          Utils.EnterprisetableDataAlterFun(this, EnterprisetableDatares);
           axios
             .post(
-              Utils.ServeUrl + "/GiftManagement/GiftSearchReturnDetailsData",
+              Utils.ServeUrl + "/EnterpriseManagement/EnterpriseSearchReturnDetailsData",
               {
-                GiftUnique: item.GiftUnique,
+                Registration: item.Registration,
               }
             )
-            .then((formDatares) => {
-              Utils.fromDataAlterFun(this,formDatares)
+            .then((formDatares) => { 
+              console.log(formDatares)
+              Utils.EnterprisefromDataAlterFun(this, formDatares);
             })
             .catch((err) => {
               console.log(err);
@@ -75,7 +76,6 @@ export default {
         });
     },
   },
-  watch: {
-  },
+  watch: {},
 };
 </script>

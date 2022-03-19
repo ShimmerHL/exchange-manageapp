@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height: 100%; border: 1px solid #eee">
+  <el-container style="height: 100%">
     <el-aside
       style="
         width: none;
@@ -8,24 +8,34 @@
         transition: 1s;
       "
     >
-      <el-menu :default-openeds="['2']">
+      <el-menu
+        default-active="2"
+        class="el-menu-vertical-demo"
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ffd04b"
+      >
         <!--  :default-openeds="['1']" -->
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>礼品</template>
-          <el-menu-item index="1-1">
-            <router-link to="/GiftManagement">礼品管理</router-link>
-          </el-menu-item>
+          <router-link to="/GiftManagement">
+            <el-menu-item index="1-1"> 礼品管理 </el-menu-item>
+          </router-link>
         </el-submenu>
         <el-submenu index="2">
           <template slot="title"><i class="el-icon-menu"></i>用户</template>
-
-          <el-menu-item index="2-1">
-            <router-link to="/UserManagement">用户管理</router-link>
-          </el-menu-item>
+          <router-link to="/UserManagement">
+            <el-menu-item index="2-1"> 用户管理 </el-menu-item>
+          </router-link>
         </el-submenu>
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-setting"></i>企业</template>
-          <el-menu-item index="3-1">企业用户管理</el-menu-item>
+          <router-link to="/EnterpriseManagement">
+            <el-menu-item index="3-1"> 企业用户管理 </el-menu-item>
+          </router-link>
+          <router-link to="/CustomQuery">
+            <el-menu-item index="3-2"> 定制查询 </el-menu-item>
+          </router-link>
         </el-submenu>
       </el-menu>
     </el-aside>
@@ -38,5 +48,6 @@ export default {
   data() {
     return {};
   },
+  methods: {},
 };
 </script>

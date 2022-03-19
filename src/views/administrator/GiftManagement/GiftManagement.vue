@@ -2,7 +2,7 @@
   <el-table
     class="BeforeNone"
     :data="$store.state.tableData"
-    style="width: 100%; overflow: scroll;"
+    style="width: 100%; overflow: scroll"
     :row-key="GetRowKeys"
     :expand-row-keys="expands"
     lazy
@@ -10,14 +10,15 @@
   >
     <gift-details></gift-details>
 
-    <el-table-column label="礼品 ID" prop="GiftUnique" width="300px"> </el-table-column>
+    <el-table-column label="礼品 ID" prop="GiftUnique" width="300px">
+    </el-table-column>
     <el-table-column label="礼品缩略名" prop="CommodityName"> </el-table-column>
-    <el-table-column label="营业注册号" prop="Registration" width="300px"> </el-table-column>
+    <el-table-column label="营业注册号" prop="Registration" width="300px">
+    </el-table-column>
     <el-table-column label="状态" prop="Exist" width="100px"> </el-table-column>
-    <el-table-column align="right" >
-      <template slot="header" >
-        <!-- :tableData="tableData" -->
-          <search-input ></search-input>
+    <el-table-column align="right">
+      <template slot="header">
+        <gift-search-input></gift-search-input>
       </template>
       <template slot-scope="scope">
         <el-button
@@ -30,15 +31,24 @@
           >编辑</el-button
         >
 
-        <el-button v-if="scope.row.Exist == '未删除'" style="width:80px;" size="mini" type="danger" @click="HandleDeleteOrRecover(scope.$index,'未删除')"
+        <el-button
+          v-if="scope.row.Exist == '未删除'"
+          style="width: 80px"
+          size="mini"
+          type="danger"
+          @click="HandleDeleteOrRecover(scope.$index, '未删除')"
           >删除</el-button
         >
-        <el-button v-else size="mini" type="danger" style="width:80px;"  @click="HandleDeleteOrRecover(scope.$index,'已删除')"
+        <el-button
+          v-else
+          size="mini"
+          type="danger"
+          style="width: 80px"
+          @click="HandleDeleteOrRecover(scope.$index, '已删除')"
           >恢复</el-button
         >
       </template>
     </el-table-column>
-    
   </el-table>
 </template>
 
@@ -47,7 +57,7 @@ import GiftDetails from "./GiftDetails.vue";
 import Utils from "../../../utils/utils";
 import axios from "axios";
 
-import SearchInput from "./SearchInput.vue"
+import GiftSearchInput from "./GiftSearchInput.vue";
 
 export default {
   data() {
@@ -57,13 +67,13 @@ export default {
       search: "",
       expands: [],
       loading: true,
-      tableData:[]
-      // tableData: [ 
+      tableData: [],
+      // tableData: [
       //   // {
       //   //   id: 1,
       //   //   GiftUnique: "123",
       //   //   CommodityName: "12",
-      //   //   Registration: "123", 
+      //   //   Registration: "123",
       //   //   Exist: 1,
       //   //   Edit: false,
       //   // },
@@ -76,10 +86,11 @@ export default {
       //   //   Edit: false,
       //   // },
       // ],
-    }
+    };
   },
   components: {
-    GiftDetails,SearchInput
+    GiftDetails,
+    GiftSearchInput,
   },
   methods: {
     GetRowKeys(row) {
@@ -88,8 +99,8 @@ export default {
     },
     HandleEdit(index) {
       //编辑按钮
-      if(this.$store.state.tableData[index].Edit == undefined){
-        this.$store.state.tableData[index].Edit = false
+      if (this.$store.state.tableData[index].Edit == undefined) {
+        this.$store.state.tableData[index].Edit = false;
       }
 
       this.$set(this.expands, 0, index + 1);
@@ -99,27 +110,31 @@ export default {
       //完成按钮
       this.$store.state.tableData[index].Edit = false;
     },
-    HandleDeleteOrRecover(index,Str) {
+    HandleDeleteOrRecover(index, Str) {
       //删除 恢复
-      let ExistState = Str == "未删除"? 1 : 0
-      axios.post(Utils.ServeUrl + "/GiftManagement/GiftDeleteOrRecover",{
-        GiftUnique :this.$store.state.tableData[index].GiftUnique,
-        Exist:ExistState
-      }).then(()=>{
-        this.$store.state.tableData[index].Exist = ExistState?"已删除":"未删除"
-      }).catch((err)=>{
-        console.log(err)
-      })
+      let ExistState = Str == "未删除" ? 1 : 0;
+      axios
+        .post(Utils.ServeUrl + "/GiftManagement/GiftDeleteOrRecover", {
+          GiftUnique: this.$store.state.tableData[index].GiftUnique,
+          Exist: ExistState,
+        })
+        .then(() => {
+          this.$store.state.tableData[index].Exist = ExistState
+            ? "已删除"
+            : "未删除";
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   mounted() {
     axios
       .get(Utils.ServeUrl + "/GiftManagement")
       .then((res) => {
+        Utils.tableDataAlterFun(this, res);
 
-        Utils.tableDataAlterFun(this,res)
-        
-       this.loading = false  //关闭loading
+        this.loading = false; //关闭loading
       })
       .catch((err) => {
         console.log(err);

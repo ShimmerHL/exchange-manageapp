@@ -20,6 +20,16 @@ const routes: Array<RouteConfig> = [
         name: 'UserManagement',
         component: () => import('../views/administrator/UserManagement/UserManagement.vue')
       },
+      {
+        path: '/EnterpriseManagement',
+        name: 'EnterpriseManagement',
+        component: () => import('../views/administrator/EnterpriseManagement/EnterpriseManagement.vue')
+      },
+      {
+        path: '/CustomQuery',
+        name: 'CustomQuery',
+        component: () => import('../views/administrator/CustomQuery/CustomQuery.vue')
+      },
     ]
   },
   // {

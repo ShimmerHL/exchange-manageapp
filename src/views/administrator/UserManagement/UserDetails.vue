@@ -202,12 +202,6 @@ export default {
   },
   data() {
     return {
-      imageUrl: "",
-      UploadRecordData: [], //scope index id
-      options: [
-        { value: 0, label: "女性" },
-        { value: 1, label: "男性" },
-      ],
       UserfromData: [],
       // UserfromData: [
       //   // {

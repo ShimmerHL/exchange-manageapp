@@ -9,6 +9,10 @@ export default new Vuex.Store({
     tableData:[],
     UserfromData:[],
     UsertableData:[],
+    EnterprisefromData:[],
+    EnterprisetableData:[],
+    CustomQueryfromData:[],
+    CustomQuerytableData:[],
 
   },
   getters: {
@@ -25,7 +29,19 @@ export default new Vuex.Store({
     },
     UsertableDataAlter(state,Arr){
       state.UsertableData = Arr
-    }
+    },
+    EnterpriseformDataAlter(state,Arr){
+      state.EnterprisefromData = Arr
+    },
+    EnterprisetableDataAlter(state,Arr){
+      state.EnterprisetableData = Arr
+    },
+    CustomQueryformDataAlter(state,Arr){
+      state.CustomQueryfromData = Arr
+    },
+    CustomQuerytableDataAlter(state,Arr){
+      state.CustomQuerytableData = Arr
+    }  
   },
   actions: {
   },

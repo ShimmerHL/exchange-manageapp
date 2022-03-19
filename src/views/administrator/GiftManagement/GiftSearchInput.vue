@@ -2,10 +2,10 @@
   <!-- 导入方式解决input无法输入问题 -->
   <el-autocomplete
     class="inline-input"
-    style="width: 100%"
+    style="width: 100%;"
     v-model="state"
     :fetch-suggestions="querySearch"
-    placeholder="请输入用户名"
+    placeholder="请输入礼品全名"
     :trigger-on-focus="false"
     @select="handleSelect"
     :clearable="true"
@@ -28,13 +28,14 @@ export default {
     async querySearch(queryString, cb) {
       let restaurants = await new Promise((res, rej) => {
         axios
-          .post(Utils.ServeUrl + "/UserManagement/UserManagementSearch", {
+          .post(Utils.ServeUrl + "/GiftManagement/GiftManagementSearch", {
             Text: queryString,
           })
           .then((AxiosRes) => {
+            console.log(AxiosRes)
             res(AxiosRes.data);
           })
-          .catch((err) => {rej(err)});
+          .catch((err) => [rej(err)]);
       });
       cb(restaurants);
     },
@@ -49,23 +50,22 @@ export default {
     handleSelect(item) {
       axios
         .post(
-          Utils.ServeUrl + "/UserManagement/UserSearchReturnManagementData",
+          Utils.ServeUrl + "/GiftManagement/GiftSearchReturnManagementData",
           {
-            Useropenid: item.Useropenid,
+            GiftUnique: item.GiftUnique,
           }
         )
-        .then((UsertableDatares) => {
-          Utils.UsertableDataAlterFun(this, UsertableDatares);
+        .then((tableDatares) => {
+              Utils.tableDataAlterFun(this,tableDatares)
           axios
             .post(
-              Utils.ServeUrl + "/UserManagement/UserSearchReturnDetailsData",
+              Utils.ServeUrl + "/GiftManagement/GiftSearchReturnDetailsData",
               {
-                Useropenid: item.Useropenid,
+                GiftUnique: item.GiftUnique,
               }
             )
-            .then((formDatares) => { 
-              console.log(formDatares)
-              Utils.UserfromDataAlterFun(this, formDatares);
+            .then((formDatares) => {
+              Utils.fromDataAlterFun(this,formDatares)
             })
             .catch((err) => {
               console.log(err);
@@ -76,6 +76,13 @@ export default {
         });
     },
   },
-  watch: {},
+  watch: {
+  },
 };
 </script>
+
+<style>
+  .inline-input input{
+    border-radius:0 4px 4px 0;
+  }
+</style>

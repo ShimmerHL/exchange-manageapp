@@ -71,6 +71,72 @@ let UserfromDataAlterFun = (context, res) => {  //UserformData请求到的数据
     context.$store.commit("UserformDataAlter", DataArr)
 }
 
+let EnterprisetableDataAlterFun = (context, res) => {  //EnterprisetableData请求到的数据修改
+    let NewData = [];
+    res.data.forEach((item, index) => {
+        NewData.push({
+            id: index + 1,
+            Registration: item.Registration,
+            Password: item.Password,
+            Edit: false,
+        })
+    })
+    context.$store.commit("EnterprisetableDataAlter", NewData)
+}
+let EnterprisefromDataAlterFun = (context, res) => {  // EnterpriseformData请求到的数据修改
+    let DataArr = res.data;
+
+    context.$store.commit("EnterpriseformDataAlter", DataArr)
+}
+
+let CustomQuerytableDataAlterFun = (context, res) => {  // CustomQuerytableData请求到的数据修改
+    let NewData = [];
+    res.data.forEach((item, index) => {
+        let StateTransitionText = item.Exist ? "已删除" : "未删除"
+        NewData.push({
+            id: index + 1,
+            GiftUnique: item.GiftUnique,
+            CommodityName: item.CommodityName,
+            Registration: item.Registration,
+            Exist: StateTransitionText,
+            Edit: false,
+        })
+    }) 
+    context.$store.commit("CustomQuerytableDataAlter", NewData)
+}
+let CustomQueryfromDataAlterFun = (context, res) => {  //  CustomQueryformData请求到的数据修改
+    let DataArr = res.data;
+
+    for (let i = 0; i < DataArr.length; i++) {
+        DataArr[i].CarouselPictures.forEach((item) => {
+            if (item.CarouselPicturesUrl !== " ") {
+                item.CarouselPicturesUrl =
+                    ServeUrl + item.CarouselPicturesUrl; //添加域名
+            } else {
+                item.CarouselPicturesUrl = ""; //避免带有空格被渲染
+            }
+        });
+        DataArr[i].Specification.forEach((item) => {
+            if (item.SpecificationText == " ") {
+                item.SpecificationText = ""; //避免带有空格被渲染
+            }
+        });
+        DataArr[i].IntroduceImg.forEach((item) => {
+            if (item.IntroduceImgUrl !== " ") {
+                item.IntroduceImgUrl = ServeUrl + item.IntroduceImgUrl; //添加域名
+            } else {
+                item.IntroduceImgUrl = ""; //避免带有空格被渲染
+            }
+        })
+    }
+
+    context.$store.commit("CustomQueryformDataAlter", DataArr)
+}
+
 module.exports = {
-    ServeUrl, fromDataAlterFun, tableDataAlterFun, UsertableDataAlterFun, UserfromDataAlterFun
+    ServeUrl, 
+    fromDataAlterFun, tableDataAlterFun, 
+    UsertableDataAlterFun, UserfromDataAlterFun,
+    EnterprisetableDataAlterFun,EnterprisefromDataAlterFun,
+    CustomQuerytableDataAlterFun,CustomQueryfromDataAlterFun
 }
