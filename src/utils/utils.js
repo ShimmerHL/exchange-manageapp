@@ -133,10 +133,50 @@ let CustomQueryfromDataAlterFun = (context, res) => {  //  CustomQueryformData�
     context.$store.commit("CustomQueryformDataAlter", DataArr)
 }
 
+let LogisticstableDataAlterFun = (context, res) => {  //LogisticstableData请求到的数据修改
+    let NewData = [];
+    
+    res.data.forEach((item, index) => {
+        NewData.push({
+            id: index + 1,
+            OrderUnique: item.OrderUnique,
+            CommodityFunllName: item.CommodityFunllName,
+            UserName: item.UserName,
+            Edit: false,
+        })
+    })
+    context.$store.commit("LogisticstableDataAlter", NewData)
+
+}
+let LogisticsfromDataAlterFun = (context, res) => {  //LogisticsformData请求到的数据修改
+    let DataArr = res.data;
+       
+
+        DataArr.forEach(item => {
+            item.Thumbnail = ServeUrl + item.Thumbnail; //添加域名
+            //由于mysql时区比会慢8小时所以在这直接修改加一天(mysql时区怎么改都不变的傻办法)
+
+            let StateTimeStr = item.StateTime.substring(0, 19).split("T")
+            let StateTimeAlter = StateTimeStr[0].split("-")
+            StateTimeAlter[2] = StateTimeAlter[2] <= 9 ? "0" + (parseInt(StateTimeAlter[2]) + 1) : parseInt(StateTimeAlter[2]) + 1
+
+            item.StateTime = StateTimeAlter.join("-") + " " + StateTimeStr[1]
+
+            let OrderTimeStr = item.OrderTime.substring(0, 19).split("T")
+            let OrderTimeAlter = OrderTimeStr[0].split("-")
+            OrderTimeAlter[2] = OrderTimeAlter[2] <= 9 ? "0" + (parseInt(OrderTimeAlter[2]) + 1) : parseInt(OrderTimeAlter[2]) + 1
+
+            item.OrderTime = OrderTimeAlter.join("-") + " " + OrderTimeStr[1]
+        })
+
+
+    context.$store.commit("LogisticsformDataAlter", DataArr)
+}
 module.exports = {
     ServeUrl, 
     fromDataAlterFun, tableDataAlterFun, 
     UsertableDataAlterFun, UserfromDataAlterFun,
     EnterprisetableDataAlterFun,EnterprisefromDataAlterFun,
-    CustomQuerytableDataAlterFun,CustomQueryfromDataAlterFun
+    CustomQuerytableDataAlterFun,CustomQueryfromDataAlterFun,
+    LogisticstableDataAlterFun,LogisticsfromDataAlterFun
 }

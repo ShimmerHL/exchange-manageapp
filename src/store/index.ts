@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    scrollTopHeight:0,
     fromData:[],
     tableData:[],
     UserfromData:[],
@@ -13,6 +14,8 @@ export default new Vuex.Store({
     EnterprisetableData:[],
     CustomQueryfromData:[],
     CustomQuerytableData:[],
+    LogisticsfromData:[],
+    LogisticstableData:[],
 
   },
   getters: {
@@ -41,7 +44,13 @@ export default new Vuex.Store({
     },
     CustomQuerytableDataAlter(state,Arr){
       state.CustomQuerytableData = Arr
-    }  
+    },
+    LogisticsformDataAlter(state,Arr){
+      state.LogisticsfromData = Arr
+    },
+    LogisticstableDataAlter(state,Arr){
+      state.LogisticstableData = Arr
+    }   
   },
   actions: {
   },

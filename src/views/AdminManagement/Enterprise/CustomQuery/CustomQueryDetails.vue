@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import Utils from "../../../utils/utils";
+import Utils from "../../../../utils/utils";
 import axios from "axios";
 export default {
   methods: {

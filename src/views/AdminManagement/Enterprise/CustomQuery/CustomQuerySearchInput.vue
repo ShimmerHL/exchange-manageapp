@@ -2,10 +2,10 @@
   <!-- 导入方式解决input无法输入问题 -->
   <el-autocomplete
     class="inline-input"
-    style="width: 100%"
+    style="width: 100%;"
     v-model="state"
     :fetch-suggestions="querySearch"
-    placeholder="请输入用户名"
+    placeholder="请输入企业注册号"
     :trigger-on-focus="false"
     @select="handleSelect"
     :clearable="true"
@@ -14,7 +14,7 @@
 
 <script>
 import axios from "axios";
-import Utils from "../../../utils/utils";
+import Utils from "../../../../utils/utils";
 
 export default {
   data() {
@@ -28,13 +28,13 @@ export default {
     async querySearch(queryString, cb) {
       let restaurants = await new Promise((res, rej) => {
         axios
-          .post(Utils.ServeUrl + "/UserManagement/UserManagementSearch", {
+          .post(Utils.ServeUrl + "/CustomQuery/CustomQuerySearch", {
             Text: queryString,
           })
           .then((AxiosRes) => {
             res(AxiosRes.data);
           })
-          .catch((err) => {rej(err)});
+          .catch((err) => [rej(err)]);
       });
       cb(restaurants);
     },
@@ -47,25 +47,24 @@ export default {
       };
     },
     handleSelect(item) {
-      axios
+      axios 
         .post(
-          Utils.ServeUrl + "/UserManagement/UserSearchReturnManagementData",
+          Utils.ServeUrl + "/CustomQuery/CustomQuerySearchReturnData",
           {
-            Useropenid: item.Useropenid,
+            Registration: item.Registration,
           }
         )
-        .then((UsertableDatares) => {
-          Utils.UsertableDataAlterFun(this, UsertableDatares);
+        .then((tableDatares) => {
+              Utils.CustomQuerytableDataAlterFun(this,tableDatares)
           axios
             .post(
-              Utils.ServeUrl + "/UserManagement/UserSearchReturnDetailsData",
+              Utils.ServeUrl + "/CustomQuery/CustomQuerySearchReturnDetailsData",
               {
-                Useropenid: item.Useropenid,
+                Registration: item.Registration,
               }
             )
-            .then((formDatares) => { 
-              console.log(formDatares)
-              Utils.UserfromDataAlterFun(this, formDatares);
+            .then((formDatares) => {
+              Utils.CustomQueryfromDataAlterFun(this,formDatares)
             })
             .catch((err) => {
               console.log(err);
@@ -76,6 +75,13 @@ export default {
         });
     },
   },
-  watch: {},
+  watch: {
+  },
 };
 </script>
+
+<style>
+  .inline-input input{
+    border-radius:0 4px 4px 0;
+  }
+</style>

@@ -14,7 +14,7 @@
 
 <script>
 import axios from "axios";
-import Utils from "../../../utils/utils";
+import Utils from "../../../../utils/utils";
 
 export default {
   data() {

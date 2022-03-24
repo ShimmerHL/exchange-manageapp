@@ -5,7 +5,7 @@
     style="width: 100%;"
     v-model="state"
     :fetch-suggestions="querySearch"
-    placeholder="请输入企业注册号"
+    placeholder="请输入礼品全名"
     :trigger-on-focus="false"
     @select="handleSelect"
     :clearable="true"
@@ -14,7 +14,7 @@
 
 <script>
 import axios from "axios";
-import Utils from "../../../utils/utils";
+import Utils from "../../../../utils/utils";
 
 export default {
   data() {
@@ -28,10 +28,11 @@ export default {
     async querySearch(queryString, cb) {
       let restaurants = await new Promise((res, rej) => {
         axios
-          .post(Utils.ServeUrl + "/CustomQuery/CustomQuerySearch", {
+          .post(Utils.ServeUrl + "/GiftManagement/GiftManagementSearch", {
             Text: queryString,
           })
           .then((AxiosRes) => {
+            console.log(AxiosRes)
             res(AxiosRes.data);
           })
           .catch((err) => [rej(err)]);
@@ -47,24 +48,24 @@ export default {
       };
     },
     handleSelect(item) {
-      axios 
+      axios
         .post(
-          Utils.ServeUrl + "/CustomQuery/CustomQuerySearchReturnData",
+          Utils.ServeUrl + "/GiftManagement/GiftSearchReturnManagementData",
           {
-            Registration: item.Registration,
+            GiftUnique: item.GiftUnique,
           }
         )
         .then((tableDatares) => {
-              Utils.CustomQuerytableDataAlterFun(this,tableDatares)
+              Utils.tableDataAlterFun(this,tableDatares)
           axios
             .post(
-              Utils.ServeUrl + "/CustomQuery/CustomQuerySearchReturnDetailsData",
+              Utils.ServeUrl + "/GiftManagement/GiftSearchReturnDetailsData",
               {
-                Registration: item.Registration,
+                GiftUnique: item.GiftUnique,
               }
             )
             .then((formDatares) => {
-              Utils.CustomQueryfromDataAlterFun(this,formDatares)
+              Utils.fromDataAlterFun(this,formDatares)
             })
             .catch((err) => {
               console.log(err);

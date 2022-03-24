@@ -264,7 +264,7 @@
 </template>
 
 <script>
-import Utils from "../../../utils/utils";
+import Utils from "../../../../utils/utils";
 import axios from "axios";
 export default {
   methods: {
@@ -789,7 +789,7 @@ export default {
 .LableIcon {
   width: 20px;
   height: 20px;
-  background: #fff url("../../../assets/icon/chahao.png") no-repeat content-box;
+  background: #fff url("../../../../assets/icon/chahao.png") no-repeat content-box;
   background-size: 20px 20px;
   border: 1px solid red;
   border-radius: 50%;

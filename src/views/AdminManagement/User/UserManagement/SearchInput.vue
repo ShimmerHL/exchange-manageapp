@@ -2,10 +2,10 @@
   <!-- 导入方式解决input无法输入问题 -->
   <el-autocomplete
     class="inline-input"
-    style="width: 100%;"
+    style="width: 100%"
     v-model="state"
     :fetch-suggestions="querySearch"
-    placeholder="请输入礼品全名"
+    placeholder="请输入用户名"
     :trigger-on-focus="false"
     @select="handleSelect"
     :clearable="true"
@@ -14,7 +14,7 @@
 
 <script>
 import axios from "axios";
-import Utils from "../../../utils/utils";
+import Utils from "../../../../utils/utils";
 
 export default {
   data() {
@@ -28,14 +28,13 @@ export default {
     async querySearch(queryString, cb) {
       let restaurants = await new Promise((res, rej) => {
         axios
-          .post(Utils.ServeUrl + "/GiftManagement/GiftManagementSearch", {
+          .post(Utils.ServeUrl + "/UserManagement/UserManagementSearch", {
             Text: queryString,
           })
           .then((AxiosRes) => {
-            console.log(AxiosRes)
             res(AxiosRes.data);
           })
-          .catch((err) => [rej(err)]);
+          .catch((err) => {rej(err)});
       });
       cb(restaurants);
     },
@@ -50,22 +49,23 @@ export default {
     handleSelect(item) {
       axios
         .post(
-          Utils.ServeUrl + "/GiftManagement/GiftSearchReturnManagementData",
+          Utils.ServeUrl + "/UserManagement/UserSearchReturnManagementData",
           {
-            GiftUnique: item.GiftUnique,
+            Useropenid: item.Useropenid,
           }
         )
-        .then((tableDatares) => {
-              Utils.tableDataAlterFun(this,tableDatares)
+        .then((UsertableDatares) => {
+          Utils.UsertableDataAlterFun(this, UsertableDatares);
           axios
             .post(
-              Utils.ServeUrl + "/GiftManagement/GiftSearchReturnDetailsData",
+              Utils.ServeUrl + "/UserManagement/UserSearchReturnDetailsData",
               {
-                GiftUnique: item.GiftUnique,
+                Useropenid: item.Useropenid,
               }
             )
-            .then((formDatares) => {
-              Utils.fromDataAlterFun(this,formDatares)
+            .then((formDatares) => { 
+              console.log(formDatares)
+              Utils.UserfromDataAlterFun(this, formDatares);
             })
             .catch((err) => {
               console.log(err);
@@ -76,13 +76,6 @@ export default {
         });
     },
   },
-  watch: {
-  },
+  watch: {},
 };
 </script>
-
-<style>
-  .inline-input input{
-    border-radius:0 4px 4px 0;
-  }
-</style>

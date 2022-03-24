@@ -2,7 +2,7 @@
   <el-table
     class="BeforeNone"
     :data="$store.state.tableData"
-    style="width: 100%; overflow: scroll"
+    style="width: 100%; overflow: scroll;"
     :row-key="GetRowKeys"
     :expand-row-keys="expands"
     lazy
@@ -54,7 +54,7 @@
 
 <script>
 import GiftDetails from "./GiftDetails.vue";
-import Utils from "../../../utils/utils";
+import Utils from "../../../../utils/utils";
 import axios from "axios";
 
 import GiftSearchInput from "./GiftSearchInput.vue";

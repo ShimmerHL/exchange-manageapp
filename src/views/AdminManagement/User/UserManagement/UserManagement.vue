@@ -35,7 +35,7 @@
 
 <script>
 import UserDetails from "./UserDetails.vue";
-import Utils from "../../../utils/utils";
+import Utils from "../../../../utils/utils";
 import axios from "axios";
 
 import SearchInput from "./SearchInput.vue"

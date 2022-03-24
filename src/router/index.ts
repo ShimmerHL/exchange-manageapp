@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import AdminHome from '../views/administrator/AdminHome.vue'
+import AdminManagement from '../views/AdminManagement/AdminManagement.vue'
 
 Vue.use(VueRouter)
 
@@ -10,27 +11,45 @@ const routes: Array<RouteConfig> = [
     name: 'AdminHome',
     component: AdminHome,
     children: [
+    ],
+    
+  },{
+    path: '/AdminManagement',
+    name: 'AdminManagement',
+    component: AdminManagement,
+    children: [
       {
-        path: '/GiftManagement',
+        path: 'GiftManagement',
         name: 'GiftManagement',
-        component: () => import('../views/administrator/GiftManagement/GiftManagement.vue')
+        component: () => import('../views/AdminManagement/Gift/GiftManagement/GiftManagement.vue')
       },
+      // {
+      //   path: 'CustomGifts',
+      //   name: 'CustomGifts',
+      //   component: () => import('../views/AdminManagement/Gift/CustomGifts/CustomGifts.vue')
+      // },
       {
-        path: '/UserManagement',
+        path: 'UserManagement',
         name: 'UserManagement',
-        component: () => import('../views/administrator/UserManagement/UserManagement.vue')
+        component: () => import('../views/AdminManagement/User/UserManagement/UserManagement.vue')
       },
       {
-        path: '/EnterpriseManagement',
+        path: 'LogisticsManagement',
+        name: 'LogisticsManagement',
+        component: () => import('../views/AdminManagement/User/LogisticsManagement/LogisticsManagement.vue')
+      },
+      {
+        path: 'EnterpriseManagement',
         name: 'EnterpriseManagement',
-        component: () => import('../views/administrator/EnterpriseManagement/EnterpriseManagement.vue')
+        component: () => import('../views/AdminManagement/Enterprise/EnterpriseManagement/EnterpriseManagement.vue')
       },
       {
-        path: '/CustomQuery',
+        path: 'CustomQuery',
         name: 'CustomQuery',
-        component: () => import('../views/administrator/CustomQuery/CustomQuery.vue')
+        component: () => import('../views/AdminManagement/Enterprise/CustomQuery/CustomQuery.vue')
       },
-    ]
+    ],
+    
   },
   // {
   //   path: '/about',
