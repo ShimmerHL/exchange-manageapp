@@ -15,7 +15,7 @@
     <el-table-column label="礼品缩略名" prop="CommodityName"> </el-table-column>
     <el-table-column label="营业注册号" prop="Registration" width="300px">
     </el-table-column>
-    <el-table-column label="状态" prop="Exist" width="100px"> </el-table-column>
+    <el-table-column label="状态" prop="Exist" width="300px"> </el-table-column>
     <el-table-column align="right">
       <template slot="header">
         <gift-search-input></gift-search-input>
