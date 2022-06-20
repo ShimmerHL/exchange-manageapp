@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
+import VueRouter from 'vue-router'
 import AdminHome from '../views/administrator/AdminHome.vue'
 import AdminManagement from '../views/AdminManagement/AdminManagement.vue'
 
 Vue.use(VueRouter)
 
-const routes: Array<RouteConfig> = [
+const routes = [
   {
     path: '/',
     name: 'AdminHome',
@@ -62,7 +62,10 @@ const routes: Array<RouteConfig> = [
 ]
 
 const router = new VueRouter({
-  routes
+  // mode: 'history',
+  mode: 'hash',
+  routes,
+  // base:'/dist',
 })
 
 export default router
